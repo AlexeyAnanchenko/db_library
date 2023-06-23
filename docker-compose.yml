@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: library_db
+    volumes:
+      - ./scripts_db/DDL/init.sql:/docker-entrypoint-initdb.d/init.sql  # создаём таблицы БД
+      - ./scripts_db/DML/load_data.sql:/docker-entrypoint-initdb.d/load_data.sql # загружаем данные в таблицы
+      - ./scripts_db/DML/queries.sql:/docker-entrypoint-initdb.d/queries.sql # выполняем запросы к БД
